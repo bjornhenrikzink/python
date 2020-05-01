@@ -5,8 +5,10 @@ token = "BQBqeF65Osc7fO1XTDpuZ3_EioaxqqI1PMcZSFGFIs6YD3w-uZJSb7wcQD3PzbVlzuTND_d
 authorization = "'Bearer " + token + "'" 
 
 #print('')
+#print('')
 #print(authorization) 
 #print('') 
+#print('')
 
 headers = { 
     'Accept': 'application/json', 
