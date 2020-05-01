@@ -6,7 +6,7 @@ authorization = "'Bearer " + token + "'"
 
 #print('')
 #print('')
-#print(authorization) 
+print(authorization) 
 #print('') 
 #print('')
 
