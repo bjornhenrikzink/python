@@ -1,12 +1,14 @@
 import requests 
 import json 
 
-token = "BQBqeF65Osc7fO1XTDpuZ3_EioaxqqI1PMcZSFGFIs6YD3w-uZJSb7wcQD3PzbVlzuTND_dNYqjeNnoZFw0D66k_o0KJi7l8iLasYzESP2-Gphk8dztV4L_bHiCRHt-qd2UryqHWunX_w_AA0GQT746jadq2JW8VeoJvKKQvaP8_0-pdaKVui9lBAJhHmUuIlGmZCJxhxoZXxPmazj9xcvofFmhQivbrT3bwVEkUBnWl3NYKev_hEoeJ6-wGDUzCdECqr_AUvkxDpEKWu8klzx4" 
+token = "BQB4vja1wrSEoVvNktcxMxZGzlvSEJ52B4yjBDGmShsGdoPEkdJH-U2ff-GzVaOUlIHqjFJLOOQFmUrZV8dEi0PX4sljfDTGi80B177FixsEZsPrsbOHCJ8qXY5KfNQBttxY8K5wmQF2DlQdhFmJ-XnAXCGKLu_FvkEWPclKykZUA7-WgeSzpCHVxTRVTtMEK710wMBosTJ8SGvkB9bxIlBQCAXurUenwjmXClYPOhVURhPNrw1ZN9EPCmMfUBmCN9vcnd4LaIxHdBW7HSAaKl8" 
 authorization = "'Bearer " + token + "'" 
 
 #print('')
-#print(authorization) 
+print(authorization) 
 #print('') 
+#print('Halloj') 
+#print('Halloj again') 
 
 headers = { 
     'Accept': 'application/json', 
