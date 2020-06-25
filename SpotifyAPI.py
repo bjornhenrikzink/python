@@ -8,7 +8,10 @@ authorization = "'Bearer " + token + "'"
 print(authorization) 
 #print('') 
 #print('Halloj') 
+<<<<<<< HEAD
 #print('Halloj again') 
+=======
+>>>>>>> 8f4a05dd93e17d96b65aa2642615608cd2ee3c0a
 
 headers = { 
     'Accept': 'application/json', 
