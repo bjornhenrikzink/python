@@ -33,7 +33,7 @@ try:
     print('\r' + 'Gitpod calling!' + '\r')
     print('\r')
 
-    rAPI = 'https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerMyAPI2'
+    rAPI = 'https://functionappzink.azurewebsites.net/api/HttpTriggerMyAPI'
     rJson = requests.get(rAPI) 
     rJsonText = rJson.text
 
