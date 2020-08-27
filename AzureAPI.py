@@ -2,29 +2,36 @@ import requests
 import json 
 import time
 
-from time import sleep
+#API1
+try:
+    rAPI = 'https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerMyAPI2'
+    rJson = requests.get(rAPI) 
+    rJsonText = rJson.text
 
-print('Azure:') 
+    rJsonLoad = json.loads(rJsonText) 
 
-# rKeyValue = '4EJnQleetD64hIjxxuN9chPy9AYXcr2/5wjpV2F6ZMSDRCDvhruovQ=='
-# rRequestString = 'https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerHelloWorldAPI?code=' + rKeyValue
+    print('\r' + 'API: ' + rAPI)
+    print('\r' + 'JSON: ' + rJsonText)
+    print('\r' + 'Name: ' + rJsonLoad['name'])
+    print('\r' + 'Domain: ' + rJsonLoad['domain'])
+    print('\r' + 'Product Area: ' + rJsonLoad['productarea'])
+    print('\r' + 'Product Team: ' + rJsonLoad['productteam'])
+except:
+    print('did not work')
 
-rRequestString = 'https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerDigitalCoreAPI?name=Bj%C3%B6rn'
-print('\r' + rRequestString)
-rString = requests.get(rRequestString)
-rText = rString.text
-print('\r' + rText)
+#API2
+try:
+    rAPI = 'https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerMyAPI'
+    rJson = requests.get(rAPI) 
+    rJsonText = rJson.text
 
-"""
+    rJsonLoad = json.loads(rJsonText) 
 
-loops = 3
-
-for i in range(loops):
-    rString = requests.get('https://funcappdigitalcore.azurewebsites.net/api/HttpTriggerHelloWorldAPI')
-    rText = rString.text
-    print('\r' + rText),
-    percent = ((i+1) / loops) * 100
-    print('\r' + str(int(percent)) + '% completed'),
-    time.sleep(10.0)
-
-"""
+    print('\r' + 'API: ' + rAPI)
+    print('\r' + 'JSON: ' + rJsonText)
+    print('\r' + 'Name: ' + rJsonLoad['name'])
+    print('\r' + 'Domain: ' + rJsonLoad['domain'])
+    print('\r' + 'Product Area: ' + rJsonLoad['productarea'])
+    print('\r' + 'Product Team: ' + rJsonLoad['productteam'])
+except:
+    print('did not work')
