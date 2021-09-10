@@ -1,0 +1,1 @@
+The code is just a fun example of using Spotify Pedalboard and Azure Cognitive Services to add effects on audio files via verbal commands
