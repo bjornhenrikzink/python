@@ -16,6 +16,7 @@ import soundfile as sf
 # Import namespaces
 import azure.cognitiveservices.speech as speech_sdk
 
+
 def main():
     try:
         global speech_config
@@ -35,7 +36,7 @@ def main():
         # Make a Pedalboard object, containing multiple plugins:
         board = Pedalboard([
             Compressor(threshold_db=-25, ratio=10),
-            Gain(gain_db=10),
+            #Gain(gain_db=10),
             Limiter(),
         ], sample_rate=sample_rate)
 
@@ -51,6 +52,7 @@ def main():
 
     except Exception as ex:
         print(ex)
+
 
 def transcribe_command():
     command = ''
@@ -75,34 +77,69 @@ def transcribe_command():
     # Return the command
     return command
 
-def execute_command(question, board, audio_file, sample_rate):
+
+def execute_command(command, board, audio_file, sample_rate):
     response = ''
 
-    if question=='play the bass.':
+    # Speech recognition variations of "play the bass"
+    command_play_bass = [
+            'play the bass.',
+            'play bass.', 
+            'play the bass line.',
+            'play bass line.',
+            ]
+
+    # Speech recognition variations of "play the bass with pedalboard"
+    command_play_bass_with_pedalboard = [
+            'play the bass with pedal board.',
+            'play the bass with paddle boat.', 
+            'play the bass with paddle board.',
+            'play the bass wood pedalboard.',
+            'play bass with pedal board.',
+            'play bass with paddle boat.', 
+            'play bass with paddle board.',
+            'play bass wood pedalboard.',
+            ]
+
+    # Speech recognition variations of "add phaser"
+    command_add_phaser = [
+            'add face a.',
+            'add facer.', 
+            'add paper',    
+            'at face a.'         
+            ]
+
+    # Speech recognition variations of "remove phaser"
+    command_remove_phaser = [
+            'remove face a.',
+            'remove facer.',     
+            ]        
+
+    if command in command_play_bass:
         playsound('Bass.wav')
-    elif question=='play the bass with pedal board.' or question=='play the bass with paddle boat.' or question=='play the bass with paddle board.' or question=='play the bass wood pedalboard.' :
+    elif command in command_play_bass_with_pedalboard:
         playsound_with_pedalboard(board, audio_file, sample_rate)
-    elif question=='add chorus.':
+    elif command=='add chorus.':
         board.append(Chorus())
         response = 'chorus added to pedal board'
-    elif question=='remove chorus.':
+    elif command=='remove chorus.':
         remove_plugin(board, 'Chorus')
         response = 'chorus removed from pedal board'    
-    elif question=='add face a.' or question=='add facer.' or question=='add paper' or question=='at face a.':
+    elif command in command_add_phaser:
         board.append(Phaser())
         response = 'phaser added to pedal board'
-    elif question=='remove face a.' or question=='remove facer.':
+    elif command in command_remove_phaser:
         remove_plugin(board, 'Phaser')
         response = 'phaser removed from pedal board'    
-    elif question=='add reverb.':
+    elif command=='add reverb.':
         board.append(Reverb())
         response = 'reverb added to pedal board'
-    elif question=='remove reverb.':
+    elif command=='remove reverb.':
         remove_plugin(board, 'Reverb')
         response = 'reverb removed from pedal board'        
 
-    # Write out the effects of the pedelboard to verify command execution
-    print("Effects of the Pedalboard:\n")
+    # Write out the pedelboard effects to verify correct command execution
+    print("Pedalboard effect:\n")
     print('\n'.join(map(str, board))) 
 
     # Configure speech synthesis
@@ -131,6 +168,7 @@ def playsound_with_pedalboard(board, audio_file, sample_rate):
 
     # Play audio with pedalboard effects
     playsound(audio_file_with_effects)   
+
 
 if __name__ == "__main__":
     main()
