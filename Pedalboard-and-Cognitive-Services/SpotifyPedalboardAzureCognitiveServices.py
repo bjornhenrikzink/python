@@ -9,6 +9,8 @@ from pedalboard import (
     Reverb,
     Limiter,
     Phaser,
+    LowpassFilter,
+    Distortion,
 )
 import os
 import soundfile as sf
@@ -35,9 +37,8 @@ def main():
     
         # Make a Pedalboard object, containing multiple plugins:
         board = Pedalboard([
-            Compressor(threshold_db=-25, ratio=10),
-            #Gain(gain_db=10),
-            Limiter(),
+            #Compressor(threshold_db=-25, ratio=10),
+            #Limiter(),
         ], sample_rate=sample_rate)
 
         # Get user input
@@ -55,6 +56,7 @@ def main():
 
 
 def transcribe_command():
+    # Initialize command
     command = ''
 
     # Configure speech recognition
@@ -79,8 +81,6 @@ def transcribe_command():
 
 
 def execute_command(command, board, audio_file, sample_rate):
-    response = ''
-
     # Speech recognition variations of "play the bass"
     command_play_bass = [
             'play the bass.',
@@ -115,6 +115,31 @@ def execute_command(command, board, audio_file, sample_rate):
             'remove facer.',     
             ]        
 
+    # Speech recognition variations of "add lowpass filter"
+    command_add_lowpass_filter = [
+            'at low pass filter.',
+            'add low pass filter.', 
+            ]
+
+    # Speech recognition variations of "remove lowpass filter"
+    command_remove_lowpass_filter = [
+            'remove low pass filter.',
+            ]  
+
+    # Speech recognition variations of "add distortion"
+    command_add_distortion = [
+            'at distortion.',
+            'add distortion.', 
+            ]
+
+    # Speech recognition variations of "remove distortion"
+    command_remove_distortion = [
+            'remove distortion.',
+            ]              
+
+    # Initialize response
+    response = ''
+
     if command in command_play_bass:
         playsound('Bass.wav')
     elif command in command_play_bass_with_pedalboard:
@@ -137,13 +162,25 @@ def execute_command(command, board, audio_file, sample_rate):
     elif command=='remove reverb.':
         remove_plugin(board, 'Reverb')
         response = 'reverb removed from pedal board'        
-
+    elif command in command_add_lowpass_filter:
+        board.append(LowpassFilter(cutoff_frequency_hz = 5000))
+        response = 'Lowpass Filter added to pedal board'
+    elif command in command_remove_lowpass_filter:
+        remove_plugin(board, 'LowpassFilter')
+        response = 'Lowpass Filter removed from pedal board'   
+    elif command in command_add_distortion:
+        board.append(Distortion())
+        response = 'Distortion added to pedal board'
+    elif command in command_remove_distortion:
+        remove_plugin(board, 'LowpassFilter')
+        response = 'Distortion removed from pedal board'   
+             
     # Write out the pedelboard effects to verify correct command execution
     print("Pedalboard effect:\n")
     print('\n'.join(map(str, board))) 
 
     # Configure speech synthesis
-    speech_config.speech_synthesis_voice_name = 'en-GB-George' # add this
+    speech_config.speech_synthesis_voice_name = 'en-GB-Susan' # add this
     speech_synthesizer = speech_sdk.SpeechSynthesizer(speech_config)   
 
     if response!='':
@@ -168,7 +205,6 @@ def playsound_with_pedalboard(board, audio_file, sample_rate):
 
     # Play audio with pedalboard effects
     playsound(audio_file_with_effects)   
-
 
 if __name__ == "__main__":
     main()
