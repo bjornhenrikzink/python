@@ -1,12 +1,10 @@
 import requests 
 import json 
 
-token = "BQB4vja1wrSEoVvNktcxMxZGzlvSEJ52B4yjBDGmShsGdoPEkdJH-U2ff-GzVaOUlIHqjFJLOOQFmUrZV8dEi0PX4sljfDTGi80B177FixsEZsPrsbOHCJ8qXY5KfNQBttxY8K5wmQF2DlQdhFmJ-XnAXCGKLu_FvkEWPclKykZUA7-WgeSzpCHVxTRVTtMEK710wMBosTJ8SGvkB9bxIlBQCAXurUenwjmXClYPOhVURhPNrw1ZN9EPCmMfUBmCN9vcnd4LaIxHdBW7HSAaKl8" 
+# Get token from https://developer.spotify.com/console/get-artist/ and paste below
+token = "" 
 authorization = "'Bearer " + token + "'" 
-
-#print('')
-print(authorization) 
-#print('') 
+print(authorization + '\n') 
 
 headers = { 
     'Accept': 'application/json', 
@@ -14,42 +12,27 @@ headers = {
     'Authorization': authorization, 
 } 
 
-rArtist = requests.get('https://api.spotify.com/v1/artists/4WwwNRj83Gcjv9L25kzGU0', headers=headers) 
+# Artist 
+req_artist = requests.get('https://api.spotify.com/v1/artists/4WwwNRj83Gcjv9L25kzGU0', headers=headers) 
 
-rArtistText = rArtist.text 
+req_artist_text = req_artist.text 
+print('Artist text: \n' + req_artist_text + '\n') 
 
-print('Text:') 
-print(rArtistText) 
-print(' ') 
+req_artist_json = req_artist.json() 
+print('Artist JSON: \n' + str(req_artist_json) + '\n') 
 
-rArtistJson = rArtist.json() 
-print('Json:') 
-print(rArtistJson) 
-print(' ') 
+req_artist_load = json.loads(req_artist_text) 
+req_artist_name = req_artist_load["name"] 
+print('Artist name: ' + str(req_artist_name) + '\n') 
 
-rArtistLoad = json.loads(rArtistText) 
-rArtistName = rArtistLoad["name"] 
+# Get artists Top Track 
+params = (('country', 'SE'),)    
+req_top_tracks = requests.get('https://api.spotify.com/v1/artists/4WwwNRj83Gcjv9L25kzGU0/top-tracks', headers=headers, params=params) 
+req_top_tracks_text = req_top_tracks.text 
+req_top_tracks_load = json.loads(req_top_tracks_text) 
 
-print('Artist name: ' + rArtistName) 
+print(req_top_tracks_text + '\n') 
 
-# 
-# Get Artists Top Track 
-# 
-
-params = ( 
-    ('country', 'SE'), 
-) 
-
-rTopTracks = requests.get('https://api.spotify.com/v1/artists/4WwwNRj83Gcjv9L25kzGU0/top-tracks', headers=headers, params=params) 
-rTopTracksText = rTopTracks.text 
-rTopTracksLoad = json.loads(rTopTracksText) 
-
-print('') 
-print(rTopTracksText) 
-print('') 
-
-cnt = 1 
-
-for i in rTopTracksLoad["tracks"]: 
-    print('Top track #' + str(cnt) + f' {i["album"]["name"]}') 
-    cnt += 1 
+# List the artists top tracks
+for i in req_top_tracks_load["tracks"]: 
+    print('Artist top track #' + str(req_top_tracks_load["tracks"].index(i)+1) + f' {i["album"]["name"]}') 
