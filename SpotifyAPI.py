@@ -8,10 +8,10 @@ authorization = "'Bearer " + token + "'"
 print(authorization + '\n') 
 
 headers = { 
-    'Accept': 'application/json', 
-    'Content-Type': 'application/json', 
-    'Authorization': authorization, 
-} 
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json', 
+        'Authorization': authorization, 
+    }    
 
 # Artist 
 req_artist = requests.get('https://api.spotify.com/v1/artists/4WwwNRj83Gcjv9L25kzGU0', headers=headers) 
