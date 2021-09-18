@@ -1,7 +1,7 @@
 import requests 
 import json 
 
-token = "BQB4vja1wrSEoVvNktcxMxZGzlvSEJ52B4yjBDGmShsGdoPEkdJH-U2ff-GzVaOUlIHqjFJLOOQFmUrZV8dEi0PX4sljfDTGi80B177FixsEZsPrsbOHCJ8qXY5KfNQBttxY8K5wmQF2DlQdhFmJ-XnAXCGKLu_FvkEWPclKykZUA7-WgeSzpCHVxTRVTtMEK710wMBosTJ8SGvkB9bxIlBQCAXurUenwjmXClYPOhVURhPNrw1ZN9EPCmMfUBmCN9vcnd4LaIxHdBW7HSAaKl8" 
+token = "" 
 authorization = "'Bearer " + token + "'" 
 
 #print('')
