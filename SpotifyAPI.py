@@ -1,3 +1,4 @@
+# Example code to call the Spotify Get an Artist API
 import requests 
 import json 
 
