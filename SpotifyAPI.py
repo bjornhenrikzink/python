@@ -1,10 +1,7 @@
 import requests 
 import json 
 
-<<<<<<< HEAD
 # Get token from https://developer.spotify.com/console/get-artist/ and paste below
-=======
->>>>>>> 61cde8fe94cf3f54711c508238bfd8e120134a39
 token = "" 
 authorization = "'Bearer " + token + "'" 
 print(authorization + '\n') 
