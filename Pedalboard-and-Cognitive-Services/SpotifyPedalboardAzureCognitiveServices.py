@@ -81,6 +81,10 @@ def transcribe_command():
 
 
 def execute_command(command, board, audio_file, sample_rate):
+    # It would probably be more elegant to use a
+    # language understanding app, such as LUIS, recognizing
+    # the commands 
+
     # Speech recognition variations of "play the bass"
     command_play_bass = [
             'play the bass.',
