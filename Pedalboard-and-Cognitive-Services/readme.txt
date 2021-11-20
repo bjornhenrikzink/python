@@ -1,4 +1,4 @@
-This is just a fun example of using Spotify Pedalboard and Azure Cognitive Services to add effects on audio files via verbal commands. 
+This is just some fun example of using Spotify Pedalboard, Azure Cognitive Services and SAP Conversational AI to add effects on audio files via verbal commands. 
 Most of the Speech Recognition and Synthesis code is taken from the Microsoft example linked below. 
 
 -Spotify Pedalboard: https://github.com/spotify/pedalboard/
