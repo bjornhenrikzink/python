@@ -22,6 +22,11 @@ import azure.cognitiveservices.speech as speech_sdk
 def main():
     try:
         global speech_config
+        global audio_file
+        global sample_rate
+        global board
+        global bot_url
+        global bot_headers
 
         # Get Configuration Settings
         load_dotenv()
@@ -42,21 +47,9 @@ def main():
         #    Limiter(),
         ], sample_rate=sample_rate)
 
-        # Get Token Bearer for SAP Conversational AI Music Studio Bot
-        token_url = os.getenv('SAP_CAI_TOKEN_URL')
-        token_client_id = os.getenv('SAP_CAI_ClIENT_ID')
-        token_client_secret = os.getenv('SAP_CAI_CLIENT_SECRET')
-        token_data = {
-            'grant_type': 'client_credentials',
-            'client_id': token_client_id,
-            'client_secret': token_client_secret
-        }
-        token_response = requests.post(token_url, data=token_data)
-        token_response_json = token_response.json()
-        token = token_response_json['access_token']
-        
+        # Instantiate request data
         bot_url = os.getenv('SAP_CAI_MUSIC_STUDIO_BOT_URL')
-        bot_authorization = 'Bearer ' + token
+        bot_authorization = 'Bearer ' + get_bearer_token()
         bot_x_token = os.getenv('SAP_CAI_X_TOKEN')
         bot_headers = { 
             'Accept': 'application/json', 
@@ -65,23 +58,40 @@ def main():
             'X-Token': bot_x_token
         }   
 
-        # This is where the action is!
-        # Get user input
-        command = ''
-        while command != 'quit session.':
-            azure_speech_to_text_command = transcribe_command().lower()
-
-            # Use SAP CAI to figure out intent
-            sap_cai_intent = chat_command(azure_speech_to_text_command, bot_url, bot_headers)
-
-            # Execute command based on intent
-            execute_command(sap_cai_intent, board, audio_file, sample_rate)
-
-            if sap_cai_intent == 'quit session.' or sap_cai_intent == 'Bye bye':
-                command = 'quit session.'
-
+        user_input()
     except Exception as ex:
         print(ex)
+
+# Get SAP Conversational AI bearer token
+def get_bearer_token():
+    # Get Token Bearer for SAP Conversational AI Music Studio Bot
+    token_url = os.getenv('SAP_CAI_TOKEN_URL')
+    token_client_id = os.getenv('SAP_CAI_ClIENT_ID')
+    token_client_secret = os.getenv('SAP_CAI_CLIENT_SECRET')
+    token_data = {
+        'grant_type': 'client_credentials',
+        'client_id': token_client_id,
+        'client_secret': token_client_secret
+    }
+    token_response = requests.post(token_url, data=token_data)
+    token_response_json = token_response.json()
+    token = token_response_json['access_token']
+    return token
+
+# Get user input
+def user_input():
+    command = ''
+    while command != 'quit session.':
+        azure_speech_to_text_command = transcribe_command().lower()
+
+        # Use SAP CAI to figure out intent
+        sap_cai_intent = chat_command(azure_speech_to_text_command, bot_url, bot_headers)
+
+        # Execute command based on intent
+        execute_command(sap_cai_intent, board, audio_file, sample_rate)
+
+        if sap_cai_intent == 'quit session.' or sap_cai_intent == 'Bye bye':
+            command = 'quit session.'
 
 # Call Azure Speech to text recognition
 def transcribe_command():
