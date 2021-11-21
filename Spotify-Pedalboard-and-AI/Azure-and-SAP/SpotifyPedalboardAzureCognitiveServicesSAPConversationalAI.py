@@ -119,7 +119,6 @@ def transcribe_command():
 
 # Call SAP Conversational AI with Music Studio Bot to figure out command
 def chat_command(command, bot_url, bot_headers):
-
     # JSON message to send to the the Music Studio Bot
     bot_data =  '{"message": {"content":"' + command + '","type":"text"}, "conversation_id":"123"}'
     print("Chat message send to SAP CAI: " + command)
