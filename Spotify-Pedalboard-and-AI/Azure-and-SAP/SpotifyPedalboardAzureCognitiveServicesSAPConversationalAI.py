@@ -58,7 +58,7 @@ def main():
             'X-Token': bot_x_token
         }   
 
-        user_input()
+        user_input_and_action()
     except Exception as ex:
         print(ex)
 
@@ -79,7 +79,7 @@ def get_bearer_token():
     return token
 
 # Get user input
-def user_input():
+def user_input_and_action():
     command = ''
     while command != 'quit session.':
         azure_speech_to_text_command = transcribe_command().lower()
