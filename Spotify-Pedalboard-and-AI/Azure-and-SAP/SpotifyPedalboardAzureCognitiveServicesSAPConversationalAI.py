@@ -100,13 +100,13 @@ def transcribe_command():
     # Configure speech recognition
     audio_config = speech_sdk.AudioConfig(use_default_microphone=True)
     speech_recognizer = speech_sdk.SpeechRecognizer(speech_config, audio_config)
-    print('\nSpeak now...')
+    print(f'\nSpeak now...')
 
     # Process speech input
     speech = speech_recognizer.recognize_once_async().get()
     if speech.reason == speech_sdk.ResultReason.RecognizedSpeech:
         command = speech.text
-        print("Azure Cognitive Services: " + command)
+        print(f'Azure Cognitive Services: {command}')
     else:
         print(speech.reason)
         if speech.reason == speech_sdk.ResultReason.Canceled:
@@ -121,7 +121,7 @@ def transcribe_command():
 def chat_command(command, bot_url, bot_headers):
     # JSON message to send to the the Music Studio Bot
     bot_data =  '{"message": {"content":"' + command + '","type":"text"}, "conversation_id":"123"}'
-    print("Chat message send to SAP CAI: " + command)
+    print(f'Chat message send to SAP CAI: {command}')
     bot_chat = requests.post(bot_url, headers=bot_headers, data=bot_data) 
     bot_content = bot_chat.content
     bot_results = json.loads(bot_content)
@@ -130,7 +130,7 @@ def chat_command(command, bot_url, bot_headers):
     # Extract the detected language name for each document
     for bot_messages in bot_results["results"]["messages"]:
         command = bot_messages["content"]
-        print("Chat response from SAP CAI:", bot_messages["content"])
+        print(f"Chat response from SAP CAI: {command}")
 
     return command
 
@@ -188,8 +188,8 @@ def execute_command(question, board, audio_file, sample_rate):
 
 def print_effects(board):
     # Write out the effects of the pedelboard to verify command execution
-    print("\nEffects of the Pedalboard:")
-    print('\n'.join(map(str, board))) 
+    print(f"\nEffects of the Pedalboard:")
+    print(f'\n'.join(map(str, board))) 
 
 def remove_plugin(board, plugin_str):
     for plugin in board:
